@@ -3,7 +3,7 @@ use std::io::{BufReader, BufRead, Lines};
 use array_tool::vec::Intersect;
 
 fn main() {
-    // part1();
+    part1();
     part2();
 }
 
