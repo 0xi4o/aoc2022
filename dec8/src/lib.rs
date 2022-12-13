@@ -1,21 +1,28 @@
-#[derive(Debug)]
-#[derive(Copy, Clone)]
+#[derive(Debug, Copy, Clone)]
 struct Tree {
     h: u16,
     visibility: u64,
-    scenic_score: u64
+    scenic_score: u64,
 }
 
 pub fn part1(input: &str) -> usize {
     let tree_grid: Vec<Vec<u16>> = input
         .split("\n")
-        .map(|line|  line.split("").filter_map(|t| t.parse::<u16>().ok()).collect::<Vec<u16>>())
+        .map(|line| {
+            line.split("")
+                .filter_map(|t| t.parse::<u16>().ok())
+                .collect::<Vec<u16>>()
+        })
         .collect::<Vec<Vec<u16>>>();
     let mut tree_house_candidates: Vec<Tree> = Vec::new();
 
     for i in 1..(tree_grid.len() - 1) {
         for j in 1..(tree_grid[i].len() - 1) {
-            let mut tree = Tree { h: tree_grid[i][j], visibility: 0, scenic_score: 0 };
+            let mut tree = Tree {
+                h: tree_grid[i][j],
+                visibility: 0,
+                scenic_score: 0,
+            };
             let mut visible_left: u64 = 0;
             let mut visible_right: u64 = 0;
             let mut visible_top: u64 = 0;
@@ -39,10 +46,7 @@ pub fn part1(input: &str) -> usize {
                 }
             }
 
-            let curr_col = tree_grid
-                .iter()
-                .map(|x| x[j])
-                .collect::<Vec<u16>>();
+            let curr_col = tree_grid.iter().map(|x| x[j]).collect::<Vec<u16>>();
 
             for k in curr_col[0..i].iter().rev() {
                 if k >= &tree.h {
@@ -74,20 +78,29 @@ pub fn part1(input: &str) -> usize {
         .map(|(_, &t)| t)
         .collect::<Vec<Tree>>();
 
-    let total_visible_trees = visible_trees.len() + (2 * tree_grid.len()) + (2 * (tree_grid[0].len() - 2));
+    let total_visible_trees =
+        visible_trees.len() + (2 * tree_grid.len()) + (2 * (tree_grid[0].len() - 2));
     total_visible_trees
 }
 
 pub fn part2(input: &str) -> u64 {
     let tree_grid: Vec<Vec<u16>> = input
         .split("\n")
-        .map(|line|  line.split("").filter_map(|t| t.parse::<u16>().ok()).collect::<Vec<u16>>())
+        .map(|line| {
+            line.split("")
+                .filter_map(|t| t.parse::<u16>().ok())
+                .collect::<Vec<u16>>()
+        })
         .collect::<Vec<Vec<u16>>>();
     let mut tree_house_candidates: Vec<Tree> = Vec::new();
 
     for i in 1..(tree_grid.len() - 1) {
         for j in 1..(tree_grid[i].len() - 1) {
-            let mut tree = Tree { h: tree_grid[i][j], visibility: 0, scenic_score: 0 };
+            let mut tree = Tree {
+                h: tree_grid[i][j],
+                visibility: 0,
+                scenic_score: 0,
+            };
             let mut visible_left: u64 = 0;
             let mut visible_right: u64 = 0;
             let mut visible_top: u64 = 0;
@@ -111,10 +124,7 @@ pub fn part2(input: &str) -> u64 {
                 }
             }
 
-            let curr_col = tree_grid
-                .iter()
-                .map(|x| x[j])
-                .collect::<Vec<u16>>();
+            let curr_col = tree_grid.iter().map(|x| x[j]).collect::<Vec<u16>>();
 
             for k in curr_col[0..i].iter().rev() {
                 if k >= &tree.h {
